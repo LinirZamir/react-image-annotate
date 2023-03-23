@@ -25,10 +25,12 @@ import getActiveImage from "../Annotator/reducers/get-active-image"
 import getHotkeyHelpText from "../utils/get-hotkey-help-text"
 import iconDictionary from "./icon-dictionary"
 import styles from "./styles"
+
+import { useHotkeys } from "react-hotkeys-hook";
 import { useDispatchHotkeyHandlers } from "../ShortcutsManager"
 import useEventCallback from "use-event-callback"
 import useImpliedVideoRegions from "./use-implied-video-regions"
-import useKey from "use-key-hook"
+
 import { useSettings } from "../SettingsProvider"
 import { withHotKeys } from "react-hotkeys"
 
@@ -109,9 +111,8 @@ export const MainLayout = ({
     nextImage = state.images[currentImageIndex + 1]
   }
 
-  useKey(() => dispatch({ type: "CANCEL" }), {
-    detectKeys: [27],
-  })
+  useHotkeys("esc", () => dispatch({ type: "CANCEL" }));
+
 
   const isAVideoFrame = activeImage && activeImage.frameTime !== undefined
   const innerContainerRef = useRef()
